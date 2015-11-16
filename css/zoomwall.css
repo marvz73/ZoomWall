@@ -58,7 +58,8 @@ SOFTWARE.
 .zoomwall.lightbox img.active {
 	opacity: 1;
 }
-.video img{
+
+.zoomwall.lightbox .video img.active {
 	opacity: 0;
 }
 

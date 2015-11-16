@@ -147,13 +147,16 @@ var zoomwall = {
 
 		console.log(block)
 
-		// if($(block).hasClass('video')){
-		// 	$('.video.active img').unwrap('<div class="video active"></div>');
-		// 	$('video').remove();
-		// }
+		if($(block).hasClass('video')){
+			$('.video.active img').unwrap('<div class="video active"></div>');
+			$('video').remove();
+		}else{
+			$('.zoomwall').find('div.video img').unwrap('<div class="video active"></div>');
+			$('video').remove();
+		}
 
 
-		$('.zoomwall').find('.video.active img').unwrap('<div class="video active"></div>');
+
 		
 
 		// if($(block).hasClass('video') && $(block).hasClass('active')){
