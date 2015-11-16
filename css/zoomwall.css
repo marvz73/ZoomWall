@@ -54,14 +54,24 @@ SOFTWARE.
 	opacity: 0.3;
 }
 
-.video.active img,
+
 .zoomwall.lightbox img.active {
 	opacity: 1;
 }
-
+.video img{
+	opacity: 0;
+}
 
 .video{
 	display: inline;
 	position: relative;
 	z-index: 999;
+}
+
+.video-js{
+	position: absolute;
+	left: 50%;
+	right: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
 }

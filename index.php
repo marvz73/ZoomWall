@@ -147,8 +147,8 @@ shuffle($collections);
 		<script src="js/zoomwall.js"></script>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
 <link href="http://vjs.zencdn.net/5.0.2/video-js.css" rel="stylesheet">
+
 <script src="http://vjs.zencdn.net/5.0.2/video.js"></script>
 
 

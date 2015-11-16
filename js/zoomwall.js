@@ -28,6 +28,7 @@ var zoomwall = {
 
 	create: function(blocks, enableKeys) {
 
+
 		zoomwall.resize(blocks.children);
 
 		blocks.classList.remove('loading');
@@ -135,6 +136,7 @@ var zoomwall = {
 	reset: function(block) {
 
 
+
 		block.style.transform = 'translate(0, 0) scale(1)';
 		block.style.webkitTransform = 'translate(0, 0) scale(1)';
 		block.classList.remove('active');
@@ -143,15 +145,20 @@ var zoomwall = {
 
 	shrink: function(block) {
 
-		$('video').remove();
+		console.log(block)
+
+		// if($(block).hasClass('video')){
+		// 	$('.video.active img').unwrap('<div class="video active"></div>');
+		// 	$('video').remove();
+		// }
+
+
+		$('.zoomwall').find('.video.active img').unwrap('<div class="video active"></div>');
 		
-		$(block).unwrap('<div></div>');
 
-		// $('.active').css('transform','translate(0, 0) scale(1)');
+		// if($(block).hasClass('video') && $(block).hasClass('active')){
 
-		// setTimeout(function(){
-			// $(block).unwrap('<div></div>');
-		// }, 1000);
+		// }
 
 
 		block.parentNode.classList.remove('lightbox');
@@ -179,12 +186,7 @@ var zoomwall = {
 
 	expand: function(block) {
 		
-
-
-
-
 		block.classList.add('active');
-
 
 		block.parentNode.classList.add('lightbox');
 
@@ -211,7 +213,6 @@ var zoomwall = {
 			targetHeight -= parentTop;
 		}
 
-
 		// swap images
 		if (block.dataset.highres) {
 			if (block.src != block.dataset.highres && block.dataset.lowres === undefined) {
@@ -220,10 +221,6 @@ var zoomwall = {
 			block.src = block.dataset.highres;
 		}
 
-
-
-
-		
 		// determine what blocks are on this row
 		var row = [];
 		row.push(block);
@@ -286,14 +283,7 @@ var zoomwall = {
 			
 
 		for (var i = 0; i < row.length; i++) {
-			itemOffset += (prevWidth * scale - prevWidth);
-			prevWidth = parseInt(window.getComputedStyle(row[i]).width, 10);
 
-			var percentageOffsetX = (itemOffset + leftOffsetX) / prevWidth * 100;
-			var percentageOffsetY = -offsetY / parseInt(window.getComputedStyle(row[i]).height, 10) * 100;
-
-			row[i].style.transformOrigin = '0% 0%';
-			row[i].style.webkitTransformOrigin = '0% 0%';
 
 
 
@@ -303,18 +293,28 @@ if($(row[i]).hasClass('video') && $(row[i]).hasClass('active')){
 	
 	// var videoSrc = $(block).data('video');
 
+	var width = $(block).width() * 3;
+	var height = $(block).height() * 3;
+
 	$(block).wrap('<div class="video active"></div>');
 
-	$('.active').append('<video id="my-video" class="video-js" controls preload="auto" width="640" height="264"  poster="'+block.dataset.highres+'" data-setup="{}"><source src="'+block.dataset.video+'" type="video/mp4"></video>');
+	$('.active').append('<video id="video'+i+'" class="video-js" controls preload="auto" width="'+height+'" height="'+width+'"  poster="'+block.dataset.highres+'" data-setup="{}"><source src="'+block.dataset.video+'" type="video/mp4"></video>');
 
-
-
-
+// videojs('video'+i, {}, function(){
+//   // Player (this) is initialized and ready.
+// });
 
 }else{
-			row[i].style.transform = 'translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')';
-			row[i].style.webkitTransform = 'translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')';
-	
+	itemOffset += (prevWidth * scale - prevWidth);
+	prevWidth = parseInt(window.getComputedStyle(row[i]).width, 10);
+
+	var percentageOffsetX = (itemOffset + leftOffsetX) / prevWidth * 100;
+	var percentageOffsetY = -offsetY / parseInt(window.getComputedStyle(row[i]).height, 10) * 100;
+
+	row[i].style.transformOrigin = '0% 0%';
+	row[i].style.webkitTransformOrigin = '0% 0%';
+	row[i].style.transform = 'translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')';
+	row[i].style.webkitTransform = 'translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')';
 }
 
 
@@ -322,9 +322,6 @@ if($(row[i]).hasClass('video') && $(row[i]).hasClass('active')){
 
 		}
 
-
-
-		
 
 		// transform items after
 		var nextOffsetY = blockHeight * (scale - 1) - offsetY;
