@@ -36,6 +36,10 @@ var zoomwall = {
 		blocks.addEventListener('click', function() {
 			if (this.children && this.children.length > 0) {
 				zoomwall.shrink(this.children[0]);
+				$('.zoomwall').find('div.videos img').unwrap('<div class="videos active"></div>');
+				$('video').fadeOut(500, function(){
+					$(this).remove();
+				});
 			}
 		});
 
@@ -135,8 +139,6 @@ var zoomwall = {
 
 	reset: function(block) {
 
-
-
 		block.style.transform = 'translate(0, 0) scale(1)';
 		block.style.webkitTransform = 'translate(0, 0) scale(1)';
 		block.classList.remove('active');
@@ -145,24 +147,10 @@ var zoomwall = {
 
 	shrink: function(block) {
 
-		console.log(block)
-
-		if($(block).hasClass('video')){
-			$('.video.active img').unwrap('<div class="video active"></div>');
-			$('video').remove();
-		}else{
-			$('.zoomwall').find('div.video img').unwrap('<div class="video active"></div>');
-			$('video').remove();
-		}
-
-
-
-		
-
-		// if($(block).hasClass('video') && $(block).hasClass('active')){
-
-		// }
-
+		$('.zoomwall').find('div.videos img').unwrap('<div class="videos active"></div>');
+		$('video').fadeOut(500, function(){
+			$(this).remove();
+		});
 
 		block.parentNode.classList.remove('lightbox');
 
@@ -189,6 +177,13 @@ var zoomwall = {
 
 	expand: function(block) {
 		
+
+		$('.zoomwall').find('div.videos img').unwrap('<div class="videos active"></div>').removeClass('active');
+		$('video').fadeOut(500, function(){
+			$(this).remove();
+		});
+
+
 		block.classList.add('active');
 
 		block.parentNode.classList.add('lightbox');
@@ -288,39 +283,40 @@ var zoomwall = {
 		for (var i = 0; i < row.length; i++) {
 
 
-
-
-if($(row[i]).hasClass('video') && $(row[i]).hasClass('active')){
-
-	// $(row[i]).removeClass('active');
-	
-	// var videoSrc = $(block).data('video');
-
-	var width = $(block).width() * 3;
-	var height = $(block).height() * 3;
-
-	$(block).wrap('<div class="video active"></div>');
-
-	$('.active').append('<video id="video'+i+'" class="video-js" controls preload="auto" width="'+height+'" height="'+width+'"  poster="'+block.dataset.highres+'" data-setup="{}"><source src="'+block.dataset.video+'" type="video/mp4"></video>');
-
-// videojs('video'+i, {}, function(){
-//   // Player (this) is initialized and ready.
-// });
-
-}else{
 	itemOffset += (prevWidth * scale - prevWidth);
 	prevWidth = parseInt(window.getComputedStyle(row[i]).width, 10);
 
 	var percentageOffsetX = (itemOffset + leftOffsetX) / prevWidth * 100;
 	var percentageOffsetY = -offsetY / parseInt(window.getComputedStyle(row[i]).height, 10) * 100;
 
+
+if($(row[i]).hasClass('videos') && $(row[i]).hasClass('active')){
+
+
+	var width = $(block).width() * 1.5;
+	var height = $(block).height() * 1.5;
+
+	$(block).wrap('<div class="videos active"></div>');
+
+	$('.active').append('<video id="video" class="video-player" controls preload="auto" width="'+width+'" height="'+height+'"  poster="'+block.dataset.highres+'" data-setup="{}"><source src="'+block.dataset.video+'" type="video/mp4"></video>');
+
+	setTimeout(function(){
+
+		$('.video-player').center().css('transform', 'translate(1%, 1%) scale(1)');
+
+
+		//$('.video-player').center().fadeIn(500);
+
+	}, 500);
+
+}else{
+
 	row[i].style.transformOrigin = '0% 0%';
 	row[i].style.webkitTransformOrigin = '0% 0%';
 	row[i].style.transform = 'translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')';
 	row[i].style.webkitTransform = 'translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')';
+
 }
-
-
 
 
 		}
@@ -358,8 +354,9 @@ if($(row[i]).hasClass('video') && $(row[i]).hasClass('active')){
 
 			next.style.transformOrigin = '0% 0%';
 			next.style.webkitTransformOrigin = '0% 0%';
-			next.style.transform = 'translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')';
-			next.style.webkitTransform = 'translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')';
+
+			// next.style.transform = 'translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')';
+			// next.style.webkitTransform = 'translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')';
 
 			next = next.nextElementSibling;
 		}

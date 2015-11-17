@@ -140,14 +140,16 @@ shuffle($collections);
 		<title>Blueprint: Google Grid Gallery</title>
 		<meta name="description" content="Blueprint: Blueprint: Google Grid Gallery" />
 		<meta name="keywords" content="google getting started gallery, image gallery, image grid, template, masonry" />
-		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="../favicon.ico">
+		<meta name="author" content="" />
+		
+
 		<link rel="stylesheet" type="text/css" href="css/zoomwall.css" />
 
 		<script src="js/zoomwall.js"></script>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<link href="http://vjs.zencdn.net/5.0.2/video-js.css" rel="stylesheet">
+
+
 
 <script src="http://vjs.zencdn.net/5.0.2/video.js"></script>
 
@@ -171,7 +173,7 @@ for($x=0; $x<$length; $x++)
 	if(isset($collections[$x]['picture']))
 	{
 
-		echo '<img data-video="'.$collections[$x]['source'].'" class="video" src="'. $collections[$x]['picture'] . '" data-highres="' . $collections[$x]['picture'] . '" />';
+		echo '<img data-video="'.$collections[$x]['source'].'" class="videos" src="'. $collections[$x]['picture'] . '" data-highres="' . $collections[$x]['picture'] . '" />';
 
 ?>
 
@@ -202,7 +204,13 @@ window.onload = function() {
     zoomwall.create(document.getElementById('zoomwall'));
 };
 
-
+jQuery.fn.center = function () {
+    this.css("position","absolute");
+    this.css("z-index","999");
+    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + "px");
+    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+    return this;
+}
 </script>
 
 </body>
