@@ -58,17 +58,17 @@ SOFTWARE.
 	z-index: 999;
 }
 
-.zoomwall.lightbox .videos img.active {
+/*.zoomwall.lightbox .videos img.active {
 	opacity: 0;
-}
+}*/
 
-.video{
+.videos.active{
     display: inline;
-    position: absolute;
+/*    position: absolute;
     z-index: 999;
     left: 50%;
     transform: translateX(-50%);
-    text-align: center;
+    text-align: center;*/
 }
 
 .video-player{

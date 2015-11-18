@@ -40,6 +40,7 @@ var zoomwall = {
 				$('video').fadeOut(500, function(){
 					$(this).remove();
 				});
+				$('.zoomwall  img.videos').css({'display': 'inline', 'opacity': 1});
 			}
 		});
 
@@ -151,7 +152,8 @@ var zoomwall = {
 		$('video').fadeOut(500, function(){
 			$(this).remove();
 		});
-
+		$('.zoomwall  img.videos').css({'display': 'inline', 'opacity': 1});
+		
 		block.parentNode.classList.remove('lightbox');
 
 		// reset all blocks
@@ -178,11 +180,14 @@ var zoomwall = {
 	expand: function(block) {
 		
 
-		$('.zoomwall').find('div.videos img').unwrap('<div class="videos active"></div>').removeClass('active');
-		$('video').fadeOut(500, function(){
-			$(this).remove();
-		});
+		
+			$('.zoomwall').find('div.videos img').unwrap('<div class="videos active"></div>').removeClass('active');
+			$('video').fadeOut(500, function(){
+				$(this).remove();
+			});
+			$('.zoomwall  img.videos').css('display', 'inline');
 
+		
 
 		block.classList.add('active');
 
@@ -296,18 +301,49 @@ if($(row[i]).hasClass('videos') && $(row[i]).hasClass('active')){
 	var width = $(block).width() * 1.5;
 	var height = $(block).height() * 1.5;
 
-	$(block).wrap('<div class="videos active"></div>');
 
-	$('.active').append('<video id="video" class="video-player" controls preload="auto" width="'+width+'" height="'+height+'"  poster="'+block.dataset.highres+'" data-setup="{}"><source src="'+block.dataset.video+'" type="video/mp4"></video>');
-
-	setTimeout(function(){
-
-		$('.video-player').center().css('transform', 'translate(1%, 1%) scale(1)');
+	row[i].style.transformOrigin = '0% 0%';
+	row[i].style.webkitTransformOrigin = '0% 0%';
 
 
-		//$('.video-player').center().fadeIn(500);
+	// row[i].style.transform = 'translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')';
+	// row[i].style.webkitTransform = 'translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')';
 
-	}, 500);
+
+
+	// row[i].style.transform = 'translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')';
+
+
+	$(row[i]).css({
+		'transform': ' translate(' + percentageOffsetX.toFixed(8) + '%, ' + percentageOffsetY.toFixed(8) + '%) scale(' + scale.toFixed(8) + ')'
+	}).animate({opacity: 0}, 200, function(){
+					$(block).wrap('<div class="videos active"></div>');
+
+			$('.active').append('<video id="video" class="video-player hide" controls preload="auto" width="'+width+'" height="'+height+'"  poster="'+block.dataset.highres+'" data-setup="{}"><source src="'+block.dataset.video+'" type="video/mp4"></video>').find('.video-player').center().removeClass('hide');
+
+			$('.video-player').center().removeClass('hide');
+	});
+
+
+
+			// $(block).wrap('<div class="videos active"></div>');
+
+			// $('.active').append('<video id="video" class="video-player hide" controls preload="auto" width="'+width+'" height="'+height+'"  poster="'+block.dataset.highres+'" data-setup="{}"><source src="'+block.dataset.video+'" type="video/mp4"></video>').find('.video-player').center().removeClass('hide');
+
+			// $('.video-player').center().removeClass('hide');
+
+	
+
+	
+
+
+
+
+
+
+
+
+	
 
 }else{
 
